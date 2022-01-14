@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Choices
 from model_utils.fields import StatusField
 
+from account.models import User
+
 
 class CreatedAtModel (models.Model):
     created_at = models.DateTimeField (auto_now_add=True, null=True)
@@ -22,6 +24,7 @@ class Product (CreatedAtModel):
         return self.title
 class ProductReview(CreatedAtModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    author=models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews', null=True)
     text = models.TextField()
     rating = models.PositiveIntegerField(default=1)
 
